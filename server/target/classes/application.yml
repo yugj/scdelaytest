@@ -1,0 +1,8 @@
+server:
+  port: 9001
+  tomcat:
+    max-connections: 10000
+    max-threads: 10000
+spring:
+  application:
+    name: client

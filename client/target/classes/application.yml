@@ -1,0 +1,31 @@
+server:
+  port: 9002
+  tomcat:
+    max-connections: 10000
+    max-threads: 10000
+spring:
+  application:
+    name: client
+feign:
+  hystrix:
+    enabled: true
+hystrix:
+  threadpool:
+    default:
+      coreSize: 500
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000
+ribbon:
+#  eager-load:
+#    enabled: true
+#    clients: serverClient
+  MaxConnectionsPerHost: 1000
+  MaxTotalConnections: 3000
+  ReadTimeout: 5000
+  ConnectTimeout: 5000
+  MaxAutoRetries: 0
+  MaxAutoRetriesNextServer: 0
