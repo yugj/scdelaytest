@@ -12,7 +12,7 @@ feign:
 hystrix:
   threadpool:
     default:
-      coreSize: 500
+      coreSize: 300
   command:
     default:
       execution:

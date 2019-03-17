@@ -1,0 +1,9 @@
+test get,no param
+ab -n {requests} -c {concurrency} {server}
+example:
+ab -n 200 -c 200 http://localhost:9001/server/test
+
+test post with param
+ab -p {postfile} -T {content-type} -n {requests} -c {concurrency} {server}
+example:
+ab -p /Users/yugj/Documents/tmp/data/ab-data-sc.txt -T application/json -n 200 -c 200 http://localhost:9001/server/testPost

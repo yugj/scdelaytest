@@ -38,8 +38,8 @@ public class MultiThreadTest {
          */
         String url = "http://localhost:9002/client/test";
 
-        int threads = 1;
-        int round = 10;
+        int threads = 200;
+        int round = 1;
         int index = 0;
 
         AtomicInteger summaryCost = new AtomicInteger();
@@ -65,7 +65,7 @@ public class MultiThreadTest {
             Thread.sleep(1000L);
         }
 
-        Thread.sleep(10000L);
+        Thread.sleep(2000L);
         System.out.println("avg:" + (summaryCost.intValue() / (round * threads)));
         System.out.println("<<--------------");
         fixedThreadPool.shutdown();
