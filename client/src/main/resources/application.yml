@@ -7,6 +7,8 @@ spring:
   application:
     name: client
 feign:
+  httpclient:
+    enabled: true
   hystrix:
     enabled: true
 hystrix:

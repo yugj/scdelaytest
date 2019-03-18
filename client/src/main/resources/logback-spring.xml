@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/base.xml" />
+
+    <!--for tracing -->
+    <logger name="org.apache.http.impl.conn.DefaultHttpClientConnectionOperator" level="debug"/>
+    <logger name="org.apache.http.conn.HttpClientConnectionOperator" level="debug"/>
+    <logger name="org.apache.http.impl.execchain.MainClientExec" level="debug"/>
+    <logger name="org.apache.http.impl.conn.PoolingHttpClientConnectionManager" level="debug"/>
+
+</configuration>

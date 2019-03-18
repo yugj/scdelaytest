@@ -1,6 +1,8 @@
 package cn.yugj.test;
 
 import com.google.common.collect.Maps;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +24,8 @@ public class OpController {
     @Autowired
     private RestTemplate restTemplate;
 
+    private static final Logger log = LoggerFactory.getLogger(OpController.class);
+
     /**
      * post 2 server via feign hystrix ribbon HttpURLConnection
      * @return
@@ -33,11 +37,13 @@ public class OpController {
         long s1 = System.currentTimeMillis();
         Req req = new Req();
         req.setHell("test");
+
+        log.info("request");
         Resp hell = client.testPost(req);
         long s2 = System.currentTimeMillis();
 
         long cost = s2 - s1;
-        System.out.println( " test1 cost = " +  cost);
+        log.info( " test1 cost = " +  cost);
 
         return "t1:" + cost;
 
@@ -56,11 +62,13 @@ public class OpController {
         param.put("hell", "test2");
 
         long s1 = System.currentTimeMillis();
+        log.info("request");
+
         String hell = restTemplate.postForObject("http://localhost:9001/server/testPost",param,String.class,new Object());
         long s2 = System.currentTimeMillis();
 
         long cost = s2 - s1;
-        System.out.println(hell + " test2 cost = " + cost);
+        log.info(hell + " test2 cost = " + cost);
 
         return "t2:" + cost;
 
@@ -80,10 +88,12 @@ public class OpController {
         Req req = new Req();
         req.setHell("test");
 
+        log.info("request");
+
         String hell  = client.testGet();
         long s2 = System.currentTimeMillis();
         long cost = s2 - s1;
-        System.out.println(hell + " test3 cost = " +  cost);
+        log.info(hell + " test3 cost = " +  cost);
 
         return "t3:" + cost;
 
@@ -102,11 +112,13 @@ public class OpController {
         Req req = new Req();
         req.setHell("test");
 
+        log.info("request");
+
         String hell  = client.testBothGet();
 
         long s2 = System.currentTimeMillis();
         long cost = s2 - s1;
-        System.out.println(hell + " test4 cost = " +  cost);
+        log.info(hell + " test4 cost = " +  cost);
 
         return "t4:" + cost;
 
@@ -124,11 +136,13 @@ public class OpController {
         Req req = new Req();
         req.setHell("test");
 
+        log.info("request");
+
         String hell  = client.testBothPost();
 
         long s2 = System.currentTimeMillis();
         long cost = s2 - s1;
-        System.out.println(hell + " test5 cost = " +  cost);
+        log.info(hell + " test5 cost = " +  cost);
 
         return "t5:" + cost;
 
@@ -139,10 +153,13 @@ public class OpController {
     public String test6() {
 
         long s1 = System.currentTimeMillis();
+
+        log.info("request");
+
         client.testVoid();
         long s2 = System.currentTimeMillis();
         long cost = s2 - s1;
-        System.out.println("test6 cost = " +  cost);
+        log.info("test6 cost = " +  cost);
 
         return "t6:" + cost;
 
