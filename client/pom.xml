@@ -12,7 +12,7 @@
     <artifactId>client</artifactId>
 
     <properties>
-        <start-class>indi.yugj.test.springclound.hystrix.HystrixStart</start-class>
+        <start-class>cn.yugj.test.ClientStart</start-class>
     </properties>
 
 

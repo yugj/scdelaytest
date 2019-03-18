@@ -11,6 +11,10 @@
 
     <artifactId>server</artifactId>
 
+    <properties>
+        <start-class>cn.yugj.test.ServerStart</start-class>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
