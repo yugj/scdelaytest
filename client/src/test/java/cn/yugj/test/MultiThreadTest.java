@@ -38,7 +38,7 @@ public class MultiThreadTest {
          */
         String url = "http://localhost:9002/client/test";
 
-        int threads = 250;
+        int threads = 300;
         int round = 10;
         int index = 0;
 

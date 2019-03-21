@@ -1,5 +1,7 @@
-package cn.yugj.test;
+package cn.yugj.test.feign;
 
+import cn.yugj.test.param.Req;
+import cn.yugj.test.param.Resp;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -49,5 +51,11 @@ public interface SeverFeignClient {
     @RequestMapping(value = "/server/testVoid")
     void testVoid();
 
+    /**
+     * test do noting
+     * @return
+     */
+    @RequestMapping("/server/doNothing")
+    String doNothing();
 
 }

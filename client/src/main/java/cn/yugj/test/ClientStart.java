@@ -1,5 +1,6 @@
 package cn.yugj.test;
 
+import cn.yugj.test.config.TestDecoder;
 import feign.codec.Decoder;
 import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;

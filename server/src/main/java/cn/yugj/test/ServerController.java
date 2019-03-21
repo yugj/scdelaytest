@@ -102,4 +102,10 @@ public class ServerController {
         long cost = end - start;
         log.info("void cost :" + cost);
     }
+
+    @RequestMapping("/doNothing")
+    public String doNothing() {
+        log.info("do noting");
+        return "do nothing";
+    }
 }

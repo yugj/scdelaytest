@@ -2,10 +2,28 @@
 <configuration>
     <include resource="org/springframework/boot/logging/logback/base.xml" />
 
-    <!--for tracing -->
+    <!--for tracing-->
     <!--<logger name="org.apache.http.impl.conn.DefaultHttpClientConnectionOperator" level="debug"/>-->
     <!--<logger name="org.apache.http.conn.HttpClientConnectionOperator" level="debug"/>-->
     <!--<logger name="org.apache.http.impl.execchain.MainClientExec" level="debug"/>-->
     <!--<logger name="org.apache.http.impl.conn.PoolingHttpClientConnectionManager" level="debug"/>-->
+
+    <!--<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+        <!--<file>/data/logs/test/client/app.log</file>-->
+        <!--<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">-->
+            <!--<FileNamePattern>/data/logs/test/client/%d{yyyy-MM-dd__HH}.%i.log</FileNamePattern>-->
+            <!--<maxFileSize>500MB</maxFileSize>-->
+        <!--</rollingPolicy>-->
+
+        <!--<encoder>-->
+            <!--<pattern>-->
+                <!--${CONSOLE_LOG_PATTERN}-->
+            <!--</pattern>-->
+        <!--</encoder>-->
+    <!--</appender>-->
+
+    <!--<root level="info">-->
+        <!--<appender-ref ref="FILE"/>-->
+    <!--</root>-->
 
 </configuration>

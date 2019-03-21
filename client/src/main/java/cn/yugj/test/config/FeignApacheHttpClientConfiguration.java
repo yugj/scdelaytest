@@ -1,4 +1,4 @@
-package cn.yugj.test;
+package cn.yugj.test.config;
 
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import org.apache.http.client.config.RequestConfig;
@@ -70,7 +70,7 @@ public class FeignApacheHttpClientConfiguration {
         scheduledExecutorService.scheduleAtFixedRate(new Runnable() {
             @Override
             public void run() {
-                connectionManager.closeIdleConnections(CLOSE_EXPIRE_PERIOD_SECOND, TimeUnit.SECONDS);
+                connectionManager.closeIdleConnections(CLOSE_IDOL_PERIOD_SECOND, TimeUnit.SECONDS);
             }
         }, TIMER_DELAY_SECOND, CLOSE_IDOL_PERIOD_SECOND, TimeUnit.SECONDS);
 

@@ -1,5 +1,9 @@
 package cn.yugj.test;
 
+import cn.yugj.test.feign.NodeFeignClient;
+import cn.yugj.test.feign.SeverFeignClient;
+import cn.yugj.test.param.Req;
+import cn.yugj.test.param.Resp;
 import com.google.common.collect.Maps;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +24,8 @@ public class OpController {
 
     @Autowired
     private SeverFeignClient client;
+    @Autowired
+    private NodeFeignClient nodeClient;
 
     @Autowired
     private RestTemplate restTemplate;
@@ -165,4 +171,41 @@ public class OpController {
 
     }
 
+    /**
+     * java server no noting
+     * @return
+     */
+    @RequestMapping("/client/test7")
+    @ResponseBody
+    public String test7() {
+        long s1 = System.currentTimeMillis();
+
+        log.info("request");
+
+        client.doNothing();
+        long s2 = System.currentTimeMillis();
+        long cost = s2 - s1;
+        log.info("test7 cost = " +  cost);
+
+        return "t7:" + cost;
+    }
+
+    /**
+     * node server do noting
+     * @return
+     */
+    @RequestMapping("/client/test8")
+    @ResponseBody
+    public String test8() {
+        long s1 = System.currentTimeMillis();
+
+        log.info("request");
+
+        nodeClient.doNothing();
+        long s2 = System.currentTimeMillis();
+        long cost = s2 - s1;
+        log.info("test8 cost = " +  cost);
+
+        return "t8:" + cost;
+    }
 }
