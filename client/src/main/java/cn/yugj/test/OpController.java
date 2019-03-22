@@ -42,7 +42,7 @@ public class OpController {
 
         long s1 = System.currentTimeMillis();
         Req req = new Req();
-        req.setHell("test");
+        req.setHell("test中文");
 
         log.info("request");
         Resp hell = client.testPost(req);

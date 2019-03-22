@@ -7,6 +7,8 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.DefaultConnectionKeepAliveStrategy;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
@@ -25,6 +27,8 @@ import java.util.concurrent.TimeUnit;
 @Configuration
 @ConditionalOnProperty(value = "feign.httpclient.enabled", havingValue = "true", matchIfMissing = false)
 public class FeignApacheHttpClientConfiguration {
+
+    private static final Logger log = LoggerFactory.getLogger(FeignApacheHttpClientConfiguration.class);
 
     @Value("${ribbon.MaxConnectionsPerHost}")
     private Integer maxConnectionPerHost;
@@ -62,6 +66,9 @@ public class FeignApacheHttpClientConfiguration {
         scheduledExecutorService.scheduleAtFixedRate(new Runnable() {
             @Override
             public void run() {
+
+                log.info("apache connection stats: {}", connectionManager.getTotalStats().toString());
+
                 connectionManager.closeExpiredConnections();
             }
         }, TIMER_DELAY_SECOND, CLOSE_EXPIRE_PERIOD_SECOND, TimeUnit.SECONDS);
