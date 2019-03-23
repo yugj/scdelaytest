@@ -97,11 +97,6 @@ public class BasicApacheHttpClientConfiguration {
                 setConnectionManager(httpClientConnectionManager).
                 setKeepAliveStrategy(new DefaultConnectionKeepAliveStrategy()).build();
 
-        /**
-         * ugly but works
-         * some system missing charset param
-         */
-//        httpClient.getParams().setParameter("Charset", "UTF-8");
 
         return httpClient;
 
