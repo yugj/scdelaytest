@@ -19,33 +19,34 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
- * feign http client configuration
+ * http client configuration
  *
  * @author yugj
  * @date 2019/3/14 上午11:09.
  */
 @Configuration
-@ConditionalOnProperty(value = "feign.httpclient.enabled", havingValue = "true", matchIfMissing = false)
-public class FeignApacheHttpClientConfiguration {
+@ConditionalOnProperty(value = "sys.httpclient.enabled", havingValue = "true", matchIfMissing = false)
+public class BasicApacheHttpClientConfiguration {
 
-    private static final Logger log = LoggerFactory.getLogger(FeignApacheHttpClientConfiguration.class);
+    private static final Logger log = LoggerFactory.getLogger(BasicApacheHttpClientConfiguration.class);
 
-    @Value("${ribbon.MaxConnectionsPerHost}")
+    @Value("${sys.httpclient.MaxConnectionsPerHost:1000}")
     private Integer maxConnectionPerHost;
-    @Value("${ribbon.MaxTotalConnections}")
+    @Value("${sys.httpclient.MaxTotalConnections:6000}")
     private Integer maxTotalConnections;
 
-    @Value("${ribbon.ReadTimeout}")
+    @Value("${sys.httpclient.ReadTimeout:10000}")
     private Integer readTimeout;
-    @Value("${ribbon.ConnectTimeout}")
+    @Value("${sys.httpclient.ConnectTimeout:3000}")
     private Integer connectTimeout;
 
     private static final int TIMER_DELAY_SECOND = 20;
-    private static final int CLOSE_EXPIRE_PERIOD_SECOND = 5;
-    private static final int CLOSE_IDOL_PERIOD_SECOND = 30;
-    private static final int TIME_TOP_LIVE_SECOND = 30;
+    private static final int CLOSE_EXPIRE_PERIOD_SECOND = 20;
+    private static final int CLOSE_IDOL_PERIOD_SECOND = 40;
+    private static final int TIME_TO_LIVE_SECOND = 40;
+    private static final int EXECUTOR_CORE_SIZE = 3;
 
-    private final ScheduledExecutorService scheduledExecutorService = new ScheduledThreadPoolExecutor(2,
+    private final ScheduledExecutorService scheduledExecutorService = new ScheduledThreadPoolExecutor(EXECUTOR_CORE_SIZE,
             new BasicThreadFactory.Builder().namingPattern("apache-connection-manager-timer-%d").daemon(true).build());
 
     /**
@@ -57,30 +58,18 @@ public class FeignApacheHttpClientConfiguration {
     @Bean
     public HttpClientConnectionManager httpClientConnectionManager() {
 
-        final PoolingHttpClientConnectionManager connectionManager = new PoolingHttpClientConnectionManager(TIME_TOP_LIVE_SECOND, TimeUnit.SECONDS);
+        final PoolingHttpClientConnectionManager connectionManager = new PoolingHttpClientConnectionManager(TIME_TO_LIVE_SECOND, TimeUnit.SECONDS);
 
         connectionManager.setMaxTotal(maxTotalConnections);
         connectionManager.setDefaultMaxPerRoute(maxConnectionPerHost);
 
-        //释放expired conn
-        scheduledExecutorService.scheduleAtFixedRate(new Runnable() {
-            @Override
-            public void run() {
+        //release connections
+        scheduledExecutorService.scheduleAtFixedRate(() -> {
 
-                log.info("apache connection stats: {}", connectionManager.getTotalStats().toString());
-
-                connectionManager.closeExpiredConnections();
-            }
+            log.info("apache connection stats: {}", connectionManager.getTotalStats());
+            connectionManager.closeExpiredConnections();
+            connectionManager.closeIdleConnections(CLOSE_IDOL_PERIOD_SECOND, TimeUnit.SECONDS);
         }, TIMER_DELAY_SECOND, CLOSE_EXPIRE_PERIOD_SECOND, TimeUnit.SECONDS);
-
-        //释放idle conn
-        scheduledExecutorService.scheduleAtFixedRate(new Runnable() {
-            @Override
-            public void run() {
-                connectionManager.closeIdleConnections(CLOSE_IDOL_PERIOD_SECOND, TimeUnit.SECONDS);
-            }
-        }, TIMER_DELAY_SECOND, CLOSE_IDOL_PERIOD_SECOND, TimeUnit.SECONDS);
-
 
         return connectionManager;
 
@@ -107,6 +96,12 @@ public class FeignApacheHttpClientConfiguration {
                 setDefaultRequestConfig(defaultRequestConfig).
                 setConnectionManager(httpClientConnectionManager).
                 setKeepAliveStrategy(new DefaultConnectionKeepAliveStrategy()).build();
+
+        /**
+         * ugly but works
+         * some system missing charset param
+         */
+//        httpClient.getParams().setParameter("Charset", "UTF-8");
 
         return httpClient;
 

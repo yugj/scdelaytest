@@ -31,3 +31,11 @@ ribbon:
   ConnectTimeout: 5000
   MaxAutoRetries: 0
   MaxAutoRetriesNextServer: 0
+
+sys:
+  httpclient:
+    enabled: true
+    MaxConnectionsPerHost: ${ribbon.MaxConnectionsPerHost}
+    MaxTotalConnections: ${ribbon.MaxTotalConnections}
+    ReadTimeout: ${ribbon.ReadTimeout}
+    ConnectTimeout: ${ribbon.ConnectTimeout}

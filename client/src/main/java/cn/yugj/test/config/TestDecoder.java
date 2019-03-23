@@ -34,7 +34,7 @@ public class TestDecoder extends ResponseEntityDecoder {
 
         long end = System.currentTimeMillis();
 
-        log.info("decode:" + (end - start));
+        log.debug("decode: {}", (end - start));
 
         return rs;
 

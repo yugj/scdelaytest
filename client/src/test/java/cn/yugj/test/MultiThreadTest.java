@@ -38,8 +38,8 @@ public class MultiThreadTest {
          */
         String url = "http://localhost:9002/client/test";
 
-        int threads = 300;
-        int round = 10;
+        int threads = 200;
+        int round = 1;
         int index = 0;
 
         AtomicInteger summaryCost = new AtomicInteger();

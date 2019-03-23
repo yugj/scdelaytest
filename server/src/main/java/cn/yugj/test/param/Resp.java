@@ -1,4 +1,4 @@
-package cn.yugj.test;
+package cn.yugj.test.param;
 
 /**
  * @author yugj

@@ -1,5 +1,7 @@
 package cn.yugj.test;
 
+import cn.yugj.test.param.Req;
+import cn.yugj.test.param.Resp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,7 +28,7 @@ public class ServerController {
      * @throws InterruptedException
      */
     @RequestMapping(value = "/testPost")
-    public Resp testPost(@RequestBody Req req,HttpServletRequest request) throws InterruptedException {
+    public Resp testPost(@RequestBody Req req, HttpServletRequest request) throws InterruptedException {
 
         log.info("req");
 
