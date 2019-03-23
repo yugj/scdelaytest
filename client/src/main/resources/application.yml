@@ -27,8 +27,8 @@ ribbon:
 #    clients: serverClient
   MaxConnectionsPerHost: 1000
   MaxTotalConnections: 3000
-  ReadTimeout: 5000
-  ConnectTimeout: 5000
+  ReadTimeout: 5001
+  ConnectTimeout: 5001
   MaxAutoRetries: 0
   MaxAutoRetriesNextServer: 0
 
